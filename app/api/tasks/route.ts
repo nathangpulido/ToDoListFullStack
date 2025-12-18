@@ -8,7 +8,7 @@ type Task = {
 };
 
 // Banco de dados simulado
-let tasks: Task[] = [
+const tasks: Task[] = [
   {
     id: 1,
     title: "Task 1",

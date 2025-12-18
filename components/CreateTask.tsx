@@ -8,13 +8,35 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
+import { SetStateAction, useState } from "react";
 
 const CreateTask = () => {
+  const [taskName, setTaskName] = useState("");
+  const [descriptionTaskName, setdescriptionTaskName] = useState("");
+
+  function onTaskNameChangeHandler(e: {
+    target: { value: SetStateAction<string> };
+  }) {
+    setTaskName(e.target.value);
+  }
+
+  function onDescriptionTaskNameChangeHandler(e: {
+    target: { value: SetStateAction<string> };
+  }) {
+    setdescriptionTaskName(e.target.value);
+  }
+
+  function handleSubmit(event: { preventDefault: () => void }) {
+    event.preventDefault();
+    console.log("Tarefa criada", taskName, descriptionTaskName);
+  }
+
   return (
     <Card className="bg-black w-full max-w-md justify-center items-center">
       <div className="flex flex-col justify-center items-center gap-2">
@@ -26,13 +48,16 @@ const CreateTask = () => {
       <Separator />
 
       <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button variant="outline">Criar nova tarefa</Button>
-          </DialogTrigger>
-          <DialogContent className="bg-zinc-900 text-zinc-100 border border-zinc-800">
+        <DialogTrigger asChild>
+          <Button variant="outline">Criar nova tarefa</Button>
+        </DialogTrigger>
+        <DialogContent className="bg-zinc-900 text-zinc-100 border border-zinc-800">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <DialogHeader>
               <DialogTitle>Crie sua tarefa</DialogTitle>
+              <DialogDescription>
+                Preencha os dados abaixo para criar uma nova tarefa.
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4">
               <div className="grid gap-3">
@@ -40,7 +65,9 @@ const CreateTask = () => {
                 <Input
                   id="taskname"
                   name="taskname"
-                  defaultValue="Digite o nome da tarefa..."
+                  value={taskName}
+                  onChange={onTaskNameChangeHandler}
+                  placeholder="Digite o nome da tarefa..."
                 />
               </div>
               <div className="grid gap-3">
@@ -48,7 +75,9 @@ const CreateTask = () => {
                 <Input
                   id="taskdescription"
                   name="taskdescription"
-                  defaultValue="Crie uma descrição para a tarefa..."
+                  value={descriptionTaskName}
+                  onChange={onDescriptionTaskNameChangeHandler}
+                  placeholder="Digite a descrição da tarefa..."
                 />
               </div>
             </div>
@@ -62,8 +91,8 @@ const CreateTask = () => {
                 Criar Tarefa
               </Button>
             </DialogFooter>
-          </DialogContent>
-        </form>
+          </form>
+        </DialogContent>
       </Dialog>
     </Card>
   );

@@ -7,6 +7,7 @@ type Params = {
 
 // GET - Obter uma tarefa por ID
 export async function GET(_: Request, { params }: Params) {
+  console.log(params.id);
   const id = Number(params.id);
 
   if (isNaN(id)) {
@@ -41,7 +42,7 @@ export async function PUT(request: Request, { params }: Params) {
   }
 }
 
-// PATCH - Atualização parcial
+// PATCH - Atualização parcialmente a tarefa
 export async function PATCH(request: Request, { params }: Params) {
   const id = Number(params.id);
   const data = await request.json();

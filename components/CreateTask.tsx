@@ -32,9 +32,34 @@ const CreateTask = () => {
     setdescriptionTaskName(e.target.value);
   }
 
-  function handleSubmit(event: { preventDefault: () => void }) {
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
-    console.log("Tarefa criada", taskName, descriptionTaskName);
+
+    if (!taskName) return;
+
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: taskName,
+          description: descriptionTaskName,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao criar tarefa");
+      }
+
+      setTaskName("");
+      setdescriptionTaskName("");
+
+      console.log("Tarefa criada com sucesso");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

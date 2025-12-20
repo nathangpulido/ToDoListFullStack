@@ -12,12 +12,13 @@ import { ChevronRight, Trash2 } from "lucide-react";
 type Task = {
   id: number;
   title: string;
-  completed: boolean;
+  description: string;
+  isCompleted: boolean;
 };
 
 const ListTask = async () => {
   const res = await fetch("http://localhost:3000/api/tasks", {
-    cache: "no-store", // evita cache no server
+    cache: "no-store",
   });
 
   const tasks: Task[] = await res.json();
@@ -30,7 +31,7 @@ const ListTask = async () => {
             <ItemTitle className="text-white">{task.title}</ItemTitle>
 
             <ItemDescription className="text-slate-300">
-              {task.completed ? "Concluída" : "Pendente"}
+              {task.description}
             </ItemDescription>
           </ItemContent>
 

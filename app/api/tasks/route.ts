@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 // GET - Listar todas as tarefas
 export async function GET() {
-  const tasks = await prisma.task.findMany({});
+  const task = await prisma.task.findMany({});
 
-  return NextResponse.json(tasks);
+  return NextResponse.json(task);
 }
 
 // POST - Criar uma nova tarefa

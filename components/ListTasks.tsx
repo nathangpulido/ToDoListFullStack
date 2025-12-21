@@ -7,7 +7,8 @@ import {
   ItemDescription,
   ItemTitle,
 } from "@/components/ui/item";
-import { ChevronRight, Trash2 } from "lucide-react";
+import { SquarePen } from "lucide-react";
+import DeleteTask from "./DeleteTask";
 
 type Task = {
   id: number;
@@ -36,13 +37,11 @@ const ListTask = async () => {
           </ItemContent>
 
           <ItemActions>
-            <Button variant="outline" size="sm">
-              <ChevronRight />
+            <Button variant="outline" size="sm" className="cursor-pointer">
+              <SquarePen />
             </Button>
 
-            <Button variant="outline" size="sm">
-              <Trash2 />
-            </Button>
+            <DeleteTask taskId={task.id} />
           </ItemActions>
         </Item>
       ))}

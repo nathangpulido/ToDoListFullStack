@@ -1,21 +1,21 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-type Params = {
-  params: { id: string };
-};
-
 // GET - Obter uma tarefa por ID
-export async function GET(_: Request, { params }: Params) {
-  console.log(params.id);
-  const id = Number(params.id);
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
 
-  if (isNaN(id)) {
+  const taskId = Number(id);
+
+  if (isNaN(taskId)) {
     return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
   }
 
   const task = await prisma.task.findUnique({
-    where: { id },
+    where: { id: taskId },
   });
 
   if (!task) {
@@ -26,13 +26,18 @@ export async function GET(_: Request, { params }: Params) {
 }
 
 // PUT - Atualizar tarefa inteira
-export async function PUT(request: Request, { params }: Params) {
-  const id = Number(params.id);
+export async function PUT(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
+
+  const taskId = Number(id);
   const { title, description, isCompleted } = await request.json();
 
   try {
     const task = await prisma.task.update({
-      where: { id },
+      where: { id: taskId },
       data: { title, description, isCompleted },
     });
 
@@ -43,13 +48,17 @@ export async function PUT(request: Request, { params }: Params) {
 }
 
 // PATCH - Atualização parcialmente a tarefa
-export async function PATCH(request: Request, { params }: Params) {
-  const id = Number(params.id);
+export async function PATCH(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
+  const taskId = Number(id);
   const data = await request.json();
 
   try {
     const task = await prisma.task.update({
-      where: { id },
+      where: { id: taskId },
       data,
     });
 
@@ -60,12 +69,16 @@ export async function PATCH(request: Request, { params }: Params) {
 }
 
 // DELETE - Remover tarefa
-export async function DELETE(_: Request, { params }: Params) {
-  const id = Number(params.id);
+export async function DELETE(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
+  const taskId = Number(id);
 
   try {
     await prisma.task.delete({
-      where: { id },
+      where: { id: taskId },
     });
 
     return NextResponse.json(

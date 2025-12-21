@@ -14,54 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { SetStateAction, useState } from "react";
+import { createTask } from "@/app/actions/create-task";
 
 const CreateTask = () => {
-  const [taskName, setTaskName] = useState("");
-  const [descriptionTaskName, setdescriptionTaskName] = useState("");
-
-  function onTaskNameChangeHandler(e: {
-    target: { value: SetStateAction<string> };
-  }) {
-    setTaskName(e.target.value);
-  }
-
-  function onDescriptionTaskNameChangeHandler(e: {
-    target: { value: SetStateAction<string> };
-  }) {
-    setdescriptionTaskName(e.target.value);
-  }
-
-  async function handleSubmit(event: { preventDefault: () => void }) {
-    event.preventDefault();
-
-    if (!taskName) return;
-
-    try {
-      const response = await fetch("/api/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: taskName,
-          description: descriptionTaskName,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao criar tarefa");
-      }
-
-      setTaskName("");
-      setdescriptionTaskName("");
-
-      console.log("Tarefa criada com sucesso");
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   return (
     <Card className="bg-black w-full max-w-md justify-center items-center">
       <div className="flex flex-col justify-center items-center gap-2">
@@ -77,7 +32,7 @@ const CreateTask = () => {
           <Button variant="outline">Adicionar nova tarefa</Button>
         </DialogTrigger>
         <DialogContent className="bg-zinc-900 text-zinc-100 border border-zinc-800">
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form action={createTask} className="space-y-4">
             <DialogHeader>
               <DialogTitle>Crie sua tarefa</DialogTitle>
               <DialogDescription>
@@ -90,9 +45,8 @@ const CreateTask = () => {
                 <Input
                   id="taskname"
                   name="taskname"
-                  value={taskName}
-                  onChange={onTaskNameChangeHandler}
                   placeholder="Digite o nome da tarefa..."
+                  required
                 />
               </div>
               <div className="grid gap-3">
@@ -100,8 +54,6 @@ const CreateTask = () => {
                 <Input
                   id="taskdescription"
                   name="taskdescription"
-                  value={descriptionTaskName}
-                  onChange={onDescriptionTaskNameChangeHandler}
                   placeholder="Digite a descrição da tarefa..."
                 />
               </div>

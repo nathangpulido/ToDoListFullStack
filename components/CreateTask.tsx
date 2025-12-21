@@ -32,7 +32,7 @@ const CreateTask = () => {
           <Button variant="outline">Adicionar nova tarefa</Button>
         </DialogTrigger>
         <DialogContent className="bg-zinc-900 text-zinc-100 border border-zinc-800">
-          <form action={createTask} className="space-y-4">
+          <form action={createTask} className="space-y-4" autoComplete="off">
             <DialogHeader>
               <DialogTitle>Crie sua tarefa</DialogTitle>
               <DialogDescription>

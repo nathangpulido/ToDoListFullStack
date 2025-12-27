@@ -83,7 +83,7 @@ export async function DELETE(
 
     return NextResponse.json(
       { message: "Task deleted successfully" },
-      { status: 200 }
+      { status: 204 }
     );
   } catch {
     return NextResponse.json({ error: "Task not found" }, { status: 404 });

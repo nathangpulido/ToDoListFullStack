@@ -9,6 +9,18 @@ import {
 } from "@/components/ui/item";
 import { SquarePen } from "lucide-react";
 import DeleteTask from "./DeleteTask";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { editTask } from "@/app/actions/edit-task";
 
 type Task = {
   id: number;
@@ -37,9 +49,60 @@ const ListTask = async () => {
           </ItemContent>
 
           <ItemActions>
-            <Button variant="outline" size="sm" className="cursor-pointer">
-              <SquarePen />
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="cursor-pointer">
+                  <SquarePen />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-zinc-900 text-zinc-100 border border-zinc-800">
+                <form
+                  action={editTask}
+                  className="space-y-4"
+                  autoComplete="off"
+                >
+                  <input type="hidden" name="taskId" value={task.id} />
+
+                  <DialogHeader>
+                    <DialogTitle>Editar Tarefa</DialogTitle>
+                    <DialogDescription></DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4">
+                    <div className="grid gap-3">
+                      <label htmlFor="taskname">Editar Título</label>
+                      <Input
+                        id="taskname"
+                        name="taskname"
+                        placeholder="Digite o novo título..."
+                        required
+                      />
+                    </div>
+                    <div className="grid gap-3">
+                      <label htmlFor="taskdescription">Editar Descrição</label>
+                      <Input
+                        id="taskdescription"
+                        name="taskdescription"
+                        placeholder="Digite a nova descrição..."
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button variant={"outline"} className="text-black">
+                        Cancelar
+                      </Button>
+                    </DialogClose>
+                    <Button
+                      variant={"ghost"}
+                      className="text-white"
+                      type="submit"
+                    >
+                      Editar Tarefa
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
 
             <DeleteTask taskId={task.id} />
           </ItemActions>

@@ -66,9 +66,11 @@ const CreateTask = () => {
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button variant={"ghost"} className="text-white" type="submit">
-                Criar Tarefa
-              </Button>
+              <DialogClose asChild>
+                <Button variant={"ghost"} className="text-white" type="submit">
+                  Criar Tarefa
+                </Button>
+              </DialogClose>
             </DialogFooter>
           </form>
         </DialogContent>

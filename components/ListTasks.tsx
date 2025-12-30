@@ -73,7 +73,7 @@ const ListTask = async () => {
                       <Input
                         id="taskname"
                         name="taskname"
-                        placeholder="Digite o novo título..."
+                        defaultValue={task.title}
                         required
                       />
                     </div>
@@ -82,7 +82,7 @@ const ListTask = async () => {
                       <Input
                         id="taskdescription"
                         name="taskdescription"
-                        placeholder="Digite a nova descrição..."
+                        defaultValue={task.description}
                       />
                     </div>
                   </div>
@@ -92,13 +92,15 @@ const ListTask = async () => {
                         Cancelar
                       </Button>
                     </DialogClose>
-                    <Button
-                      variant={"ghost"}
-                      className="text-white"
-                      type="submit"
-                    >
-                      Editar Tarefa
-                    </Button>
+                    <DialogClose asChild>
+                      <Button
+                        variant={"ghost"}
+                        className="text-white"
+                        type="submit"
+                      >
+                        Editar Tarefa
+                      </Button>
+                    </DialogClose>
                   </DialogFooter>
                 </form>
               </DialogContent>

@@ -3,7 +3,7 @@ import ListTask from "@/components/ListTasks";
 
 const Home = () => {
   return (
-    <div className="flex flex-col min-h-screen justify-start items-center space-y-2 mt-2">
+    <div className="flex flex-col min-h-screen justify-center items-center space-y-2 mt-2">
       <CreateTask />
       <ListTask />
     </div>
